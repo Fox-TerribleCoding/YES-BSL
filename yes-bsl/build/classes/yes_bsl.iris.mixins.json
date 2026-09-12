@@ -1,0 +1,13 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "dev.yesbsl.mixin.iris",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "MixinCapturedRenderingState",
+    "MixinHeldItemSupplier"
+  ],
+  "injectors": {
+    "defaultRequire": 0
+  }
+}
