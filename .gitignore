@@ -1,0 +1,10 @@
+# 构建产物
+build/
+*.tmp
+
+# 编辑器 / 系统
+.idea/
+.vscode/
+*.iml
+Thumbs.db
+desktop.ini
