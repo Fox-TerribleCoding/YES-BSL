@@ -1,0 +1,339 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <title>YES BSL</title>
+  <desc>Repair seam: a voxel character half-ghosted (before) and half-solid (after).</desc>
+
+  <defs>
+    <linearGradient id="skyG" x1="0" y1="0" x2="0.15" y2="1">
+      <stop offset="0"    stop-color="#070B1E"/>
+      <stop offset="0.42" stop-color="#0F1C40"/>
+      <stop offset="0.78" stop-color="#173363"/>
+      <stop offset="1"    stop-color="#1E4275"/>
+    </linearGradient>
+
+    <radialGradient id="sunG" cx="0.84" cy="0.30" r="0.62">
+      <stop offset="0"    stop-color="#FFE7BE" stop-opacity="0.98"/>
+      <stop offset="0.22" stop-color="#FFC173" stop-opacity="0.62"/>
+      <stop offset="0.52" stop-color="#FF9E4A" stop-opacity="0.26"/>
+      <stop offset="1"    stop-color="#FF8A33" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="rimG" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0"   stop-color="#FFC98A" stop-opacity="0.5"/>
+      <stop offset="0.55" stop-color="#FFA85C" stop-opacity="0.18"/>
+      <stop offset="1"   stop-color="#FFA85C" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="horizonG" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0"   stop-color="#FFB169" stop-opacity="0.30"/>
+      <stop offset="0.5" stop-color="#FF9A4E" stop-opacity="0.12"/>
+      <stop offset="1"   stop-color="#FF9A4E" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Mutes the sun's glare across the wordmark band so white type stays legible. -->
+    <linearGradient id="topScrimG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0"   stop-color="#050A16" stop-opacity="0.62"/>
+      <stop offset="0.5" stop-color="#050A16" stop-opacity="0.34"/>
+      <stop offset="1"   stop-color="#050A16" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="beamG" x1="0.85" y1="0" x2="0.1" y2="1">
+      <stop offset="0"   stop-color="#FFE0B0" stop-opacity="0.22"/>
+      <stop offset="0.55" stop-color="#FFD49A" stop-opacity="0.08"/>
+      <stop offset="1"   stop-color="#FFD49A" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="seamG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0"    stop-color="#CFEFFF" stop-opacity="0"/>
+      <stop offset="0.12" stop-color="#E6F7FF" stop-opacity="0.95"/>
+      <stop offset="0.74" stop-color="#E6F7FF" stop-opacity="0.95"/>
+      <stop offset="1"    stop-color="#CFEFFF" stop-opacity="0"/>
+    </linearGradient>
+
+    <radialGradient id="vigG" cx="0.5" cy="0.46" r="0.78">
+      <stop offset="0.5" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="0.82" stop-color="#000308" stop-opacity="0.24"/>
+      <stop offset="1"   stop-color="#000308" stop-opacity="0.62"/>
+    </radialGradient>
+
+    <filter id="blurBig"   x="-30%" y="-10%" width="160%" height="120%"><feGaussianBlur stdDeviation="16"/></filter>
+    <filter id="blurSmall" x="-30%" y="-10%" width="160%" height="120%"><feGaussianBlur stdDeviation="5"/></filter>
+    <filter id="blurBeam"  x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3"/></filter>
+
+    <!-- The "before" material: desaturated, so the ghost half reads as unlit geometry. -->
+    <filter id="ghostF" x="-10%" y="-10%" width="120%" height="120%">
+      <feColorMatrix type="saturate" values="0.22"/>
+      <feComponentTransfer><feFuncR type="linear" slope="0.94"/><feFuncG type="linear" slope="0.98"/><feFuncB type="linear" slope="1.06"/></feComponentTransfer>
+    </filter>
+
+    <clipPath id="halfLeft"><rect x="0" y="0" width="256" height="512"/></clipPath>
+    <clipPath id="halfRight"><rect x="256" y="0" width="256" height="512"/></clipPath>
+
+    <!-- Diagonal tear bands. The in-game defect shears the material along a
+         diagonal (newCoord comes from vTexCoordAM / at_tangent), so the tears
+         run at an angle rather than as horizontal stripes. Each clipPath is
+         rotated in place; the displacement is applied to the content instead. -->
+    <clipPath id="band1"  transform="rotate(-24 256 256)"><rect x="-140" y="130" width="800" height="22"/></clipPath>
+    <clipPath id="band2"  transform="rotate(-24 256 256)"><rect x="-140" y="152" width="800" height="44"/></clipPath>
+    <clipPath id="band3"  transform="rotate(-24 256 256)"><rect x="-140" y="196" width="800" height="20"/></clipPath>
+    <clipPath id="band4"  transform="rotate(-24 256 256)"><rect x="-140" y="216" width="800" height="46"/></clipPath>
+    <clipPath id="band5"  transform="rotate(-24 256 256)"><rect x="-140" y="262" width="800" height="20"/></clipPath>
+    <clipPath id="band6"  transform="rotate(-24 256 256)"><rect x="-140" y="282" width="800" height="36"/></clipPath>
+    <clipPath id="band7"  transform="rotate(-24 256 256)"><rect x="-140" y="318" width="800" height="20"/></clipPath>
+    <clipPath id="band8"  transform="rotate(-24 256 256)"><rect x="-140" y="338" width="800" height="46"/></clipPath>
+    <clipPath id="band9"  transform="rotate(-24 256 256)"><rect x="-140" y="384" width="800" height="20"/></clipPath>
+    <clipPath id="band10" transform="rotate(-24 256 256)"><rect x="-140" y="404" width="800" height="48"/></clipPath>
+    <clipPath id="band11" transform="rotate(-24 256 256)"><rect x="-140" y="452" width="800" height="60"/></clipPath>
+
+    <!-- ---------------------------------------------------------------- model -->
+    <!-- Original voxel character (not a reproduction of any game asset).
+         Front face is centred on x=256 so the repair seam bisects it. -->
+    <g id="model">
+      <!-- shoulders -->
+      <rect x="114" y="336" width="284" height="176" fill="#2FB0A6"/>
+      <polygon points="114,336 144,306 428,306 398,336" fill="#4FD6C9"/>
+      <polygon points="398,336 428,306 428,482 398,512" fill="#1B7E78"/>
+      <!-- neck -->
+      <rect x="224" y="296" width="64" height="56" fill="#B8834F"/>
+      <!-- head block -->
+      <rect x="168" y="148" width="176" height="176" fill="#E9B98D"/>
+      <polygon points="168,148 198,118 374,118 344,148" fill="#4A5A85"/>
+      <polygon points="344,148 374,118 374,176 344,206" fill="#3A4668"/>
+      <polygon points="344,206 374,176 374,294 344,324" fill="#D9A87C"/>
+      <!-- hair -->
+      <rect x="168" y="148" width="176" height="58" fill="#2A3350"/>
+      <rect x="168" y="148" width="24"  height="104" fill="#2A3350"/>
+      <rect x="320" y="148" width="24"  height="104" fill="#2A3350"/>
+      <!-- eyes: sclera on the OUTER side, pupil on the INNER side, matching the
+           official Steve face (row y=12: white at x9/x14, pupil at x10/x13).
+           Converging pupils are what make the stare read as focused. -->
+      <rect x="199" y="244" width="30" height="28" fill="#F4F7FF"/>
+      <rect x="216" y="244" width="13" height="28" fill="#16203C"/>
+      <rect x="283" y="244" width="30" height="28" fill="#F4F7FF"/>
+      <rect x="283" y="244" width="13" height="28" fill="#16203C"/>
+      <!-- mouth -->
+      <rect x="241" y="292" width="30" height="12" fill="#A96F4B"/>
+    </g>
+  </defs>
+
+  <!-- ================================================================ backdrop -->
+  <rect width="512" height="512" fill="url(#skyG)"/>
+
+  <g fill="#DCE8FF">
+    <rect x="66"  y="70"  width="6" height="6" opacity="0.80"/>
+    <rect x="118" y="42"  width="4" height="4" opacity="0.55"/>
+    <rect x="48"  y="148" width="4" height="4" opacity="0.60"/>
+    <rect x="150" y="98"  width="4" height="4" opacity="0.42"/>
+    <rect x="92"  y="204" width="5" height="5" opacity="0.34"/>
+    <rect x="188" y="58"  width="5" height="5" opacity="0.48"/>
+    <rect x="36"  y="256" width="4" height="4" opacity="0.30"/>
+    <rect x="160" y="166" width="4" height="4" opacity="0.26"/>
+  </g>
+
+  <rect width="512" height="512" fill="url(#sunG)"/>
+  <ellipse cx="256" cy="506" rx="330" ry="118" fill="url(#horizonG)"/>
+  <rect x="0" y="0" width="512" height="152" fill="url(#topScrimG)"/>
+
+  <polygon points="380,-40 522,-40 251,552 109,552" fill="url(#beamG)" filter="url(#blurBeam)"/>
+
+  <!-- warm bounce behind the lit half -->
+  <ellipse cx="326" cy="250" rx="176" ry="196" fill="url(#rimG)"/>
+
+  <!-- ============================================== before / after composite -->
+  <!-- BEFORE: the material is sheared apart along a diagonal and reads as
+       semi-transparent, which is how the defect actually looks in game.
+       Fainter bands stand in for the misplaced-UV samples that land on blank
+       texels and get dropped by alpha test. -->
+  <g clip-path="url(#halfLeft)">
+    <g opacity="0.50" filter="url(#ghostF)"><use href="#model"/></g>
+    <g clip-path="url(#band1)"><g  opacity="0.44" transform="translate(16,-7)"><g  filter="url(#ghostF)"><use href="#model"/></g></g></g>
+    <g clip-path="url(#band2)"><g  opacity="0.38" transform="translate(-13,6)"><g  filter="url(#ghostF)"><use href="#model"/></g></g></g>
+    <g clip-path="url(#band3)"><g  opacity="0.46" transform="translate(22,-10)"><g filter="url(#ghostF)"><use href="#model"/></g></g></g>
+    <g clip-path="url(#band4)"><g  opacity="0.22" transform="translate(-18,8)"><g  filter="url(#ghostF)"><use href="#model"/></g></g></g>
+    <g clip-path="url(#band5)"><g  opacity="0.48" transform="translate(11,-5)"><g  filter="url(#ghostF)"><use href="#model"/></g></g></g>
+    <g clip-path="url(#band6)"><g  opacity="0.30" transform="translate(-9,4)"><g   filter="url(#ghostF)"><use href="#model"/></g></g></g>
+    <g clip-path="url(#band7)"><g  opacity="0.42" transform="translate(24,-11)"><g filter="url(#ghostF)"><use href="#model"/></g></g></g>
+    <g clip-path="url(#band8)"><g  opacity="0.24" transform="translate(-15,7)"><g  filter="url(#ghostF)"><use href="#model"/></g></g></g>
+    <g clip-path="url(#band9)"><g  opacity="0.44" transform="translate(13,-6)"><g  filter="url(#ghostF)"><use href="#model"/></g></g></g>
+    <g clip-path="url(#band10)"><g opacity="0.32" transform="translate(-11,5)"><g  filter="url(#ghostF)"><use href="#model"/></g></g></g>
+    <g clip-path="url(#band11)"><g opacity="0.40" transform="translate(19,-8)"><g  filter="url(#ghostF)"><use href="#model"/></g></g></g>
+  </g>
+
+  <!-- AFTER: solid, fully saturated. -->
+  <g clip-path="url(#halfRight)">
+    <use href="#model"/>
+  </g>
+
+  <!-- sunlit rim on every silhouette edge facing the light -->
+  <g clip-path="url(#halfRight)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M198,118 L374,118"   stroke="#FFD9A0" stroke-width="4" opacity="0.55"/>
+    <path d="M374,118 L374,294 L344,324" stroke="#FFD9A0" stroke-width="5" opacity="0.90"/>
+    <path d="M144,306 L428,306"   stroke="#FFD9A0" stroke-width="4" opacity="0.45"/>
+    <path d="M428,306 L428,482 L398,512" stroke="#FFD9A0" stroke-width="5" opacity="0.85"/>
+  </g>
+
+  <!-- ============================================================= repair seam -->
+  <g clip-path="url(#halfRight)">
+    <rect x="234" y="104" width="44" height="400" fill="url(#seamG)" opacity="0.20" filter="url(#blurBig)"/>
+  </g>
+  <g>
+    <rect x="246" y="104" width="20" height="400" fill="url(#seamG)" opacity="0.38" filter="url(#blurSmall)"/>
+    <rect x="254.5" y="110" width="3" height="390" fill="url(#seamG)"/>
+  </g>
+
+  <rect width="512" height="512" fill="url(#vigG)"/>
+
+  <!-- ==================================================== wordmark: "BSL Repair" -->
+  <!-- Glyphs are Mojang's font/ascii.png bitmap (8x8 cells, ink 5x7, advance =
+       ink width + 1, space = 4) reproduced as pixel rects at 7x, centred on
+       x=256 and sitting in the clear sky above the character. Drawn last so the
+       vignette cannot soften it; the offset copy is the classic 1-unit drop
+       shadow, which is what keeps it readable over the sunlit sky. -->
+  <g fill="#050A16" opacity="0.78" transform="translate(7,7)">
+        <rect x="67" y="32" width="28" height="7"/>
+    <rect x="67" y="39" width="7" height="7"/>
+    <rect x="95" y="39" width="7" height="7"/>
+    <rect x="67" y="46" width="28" height="7"/>
+    <rect x="67" y="53" width="7" height="7"/>
+    <rect x="95" y="53" width="7" height="7"/>
+    <rect x="67" y="60" width="7" height="7"/>
+    <rect x="95" y="60" width="7" height="7"/>
+    <rect x="67" y="67" width="7" height="7"/>
+    <rect x="95" y="67" width="7" height="7"/>
+    <rect x="67" y="74" width="28" height="7"/>
+    <rect x="116" y="32" width="28" height="7"/>
+    <rect x="109" y="39" width="7" height="7"/>
+    <rect x="116" y="46" width="21" height="7"/>
+    <rect x="137" y="53" width="7" height="7"/>
+    <rect x="137" y="60" width="7" height="7"/>
+    <rect x="109" y="67" width="7" height="7"/>
+    <rect x="137" y="67" width="7" height="7"/>
+    <rect x="116" y="74" width="21" height="7"/>
+    <rect x="151" y="32" width="7" height="7"/>
+    <rect x="151" y="39" width="7" height="7"/>
+    <rect x="151" y="46" width="7" height="7"/>
+    <rect x="151" y="53" width="7" height="7"/>
+    <rect x="151" y="60" width="7" height="7"/>
+    <rect x="151" y="67" width="7" height="7"/>
+    <rect x="151" y="74" width="35" height="7"/>
+    <rect x="221" y="32" width="28" height="7"/>
+    <rect x="221" y="39" width="7" height="7"/>
+    <rect x="249" y="39" width="7" height="7"/>
+    <rect x="221" y="46" width="28" height="7"/>
+    <rect x="221" y="53" width="7" height="7"/>
+    <rect x="249" y="53" width="7" height="7"/>
+    <rect x="221" y="60" width="7" height="7"/>
+    <rect x="249" y="60" width="7" height="7"/>
+    <rect x="221" y="67" width="7" height="7"/>
+    <rect x="249" y="67" width="7" height="7"/>
+    <rect x="221" y="74" width="7" height="7"/>
+    <rect x="249" y="74" width="7" height="7"/>
+    <rect x="270" y="46" width="21" height="7"/>
+    <rect x="263" y="53" width="7" height="7"/>
+    <rect x="291" y="53" width="7" height="7"/>
+    <rect x="263" y="60" width="35" height="7"/>
+    <rect x="263" y="67" width="7" height="7"/>
+    <rect x="270" y="74" width="28" height="7"/>
+    <rect x="305" y="46" width="7" height="7"/>
+    <rect x="319" y="46" width="14" height="7"/>
+    <rect x="305" y="53" width="14" height="7"/>
+    <rect x="333" y="53" width="7" height="7"/>
+    <rect x="305" y="60" width="7" height="7"/>
+    <rect x="333" y="60" width="7" height="7"/>
+    <rect x="305" y="67" width="28" height="7"/>
+    <rect x="305" y="74" width="7" height="7"/>
+    <rect x="305" y="81" width="7" height="7"/>
+    <rect x="354" y="46" width="21" height="7"/>
+    <rect x="375" y="53" width="7" height="7"/>
+    <rect x="354" y="60" width="28" height="7"/>
+    <rect x="347" y="67" width="7" height="7"/>
+    <rect x="375" y="67" width="7" height="7"/>
+    <rect x="354" y="74" width="28" height="7"/>
+    <rect x="389" y="32" width="7" height="7"/>
+    <rect x="389" y="46" width="7" height="7"/>
+    <rect x="389" y="53" width="7" height="7"/>
+    <rect x="389" y="60" width="7" height="7"/>
+    <rect x="389" y="67" width="7" height="7"/>
+    <rect x="389" y="74" width="7" height="7"/>
+    <rect x="403" y="46" width="7" height="7"/>
+    <rect x="417" y="46" width="14" height="7"/>
+    <rect x="403" y="53" width="14" height="7"/>
+    <rect x="431" y="53" width="7" height="7"/>
+    <rect x="403" y="60" width="7" height="7"/>
+    <rect x="403" y="67" width="7" height="7"/>
+    <rect x="403" y="74" width="7" height="7"/>
+  </g>
+  <g fill="#FFFFFF">
+        <rect x="67" y="32" width="28" height="7"/>
+    <rect x="67" y="39" width="7" height="7"/>
+    <rect x="95" y="39" width="7" height="7"/>
+    <rect x="67" y="46" width="28" height="7"/>
+    <rect x="67" y="53" width="7" height="7"/>
+    <rect x="95" y="53" width="7" height="7"/>
+    <rect x="67" y="60" width="7" height="7"/>
+    <rect x="95" y="60" width="7" height="7"/>
+    <rect x="67" y="67" width="7" height="7"/>
+    <rect x="95" y="67" width="7" height="7"/>
+    <rect x="67" y="74" width="28" height="7"/>
+    <rect x="116" y="32" width="28" height="7"/>
+    <rect x="109" y="39" width="7" height="7"/>
+    <rect x="116" y="46" width="21" height="7"/>
+    <rect x="137" y="53" width="7" height="7"/>
+    <rect x="137" y="60" width="7" height="7"/>
+    <rect x="109" y="67" width="7" height="7"/>
+    <rect x="137" y="67" width="7" height="7"/>
+    <rect x="116" y="74" width="21" height="7"/>
+    <rect x="151" y="32" width="7" height="7"/>
+    <rect x="151" y="39" width="7" height="7"/>
+    <rect x="151" y="46" width="7" height="7"/>
+    <rect x="151" y="53" width="7" height="7"/>
+    <rect x="151" y="60" width="7" height="7"/>
+    <rect x="151" y="67" width="7" height="7"/>
+    <rect x="151" y="74" width="35" height="7"/>
+    <rect x="221" y="32" width="28" height="7"/>
+    <rect x="221" y="39" width="7" height="7"/>
+    <rect x="249" y="39" width="7" height="7"/>
+    <rect x="221" y="46" width="28" height="7"/>
+    <rect x="221" y="53" width="7" height="7"/>
+    <rect x="249" y="53" width="7" height="7"/>
+    <rect x="221" y="60" width="7" height="7"/>
+    <rect x="249" y="60" width="7" height="7"/>
+    <rect x="221" y="67" width="7" height="7"/>
+    <rect x="249" y="67" width="7" height="7"/>
+    <rect x="221" y="74" width="7" height="7"/>
+    <rect x="249" y="74" width="7" height="7"/>
+    <rect x="270" y="46" width="21" height="7"/>
+    <rect x="263" y="53" width="7" height="7"/>
+    <rect x="291" y="53" width="7" height="7"/>
+    <rect x="263" y="60" width="35" height="7"/>
+    <rect x="263" y="67" width="7" height="7"/>
+    <rect x="270" y="74" width="28" height="7"/>
+    <rect x="305" y="46" width="7" height="7"/>
+    <rect x="319" y="46" width="14" height="7"/>
+    <rect x="305" y="53" width="14" height="7"/>
+    <rect x="333" y="53" width="7" height="7"/>
+    <rect x="305" y="60" width="7" height="7"/>
+    <rect x="333" y="60" width="7" height="7"/>
+    <rect x="305" y="67" width="28" height="7"/>
+    <rect x="305" y="74" width="7" height="7"/>
+    <rect x="305" y="81" width="7" height="7"/>
+    <rect x="354" y="46" width="21" height="7"/>
+    <rect x="375" y="53" width="7" height="7"/>
+    <rect x="354" y="60" width="28" height="7"/>
+    <rect x="347" y="67" width="7" height="7"/>
+    <rect x="375" y="67" width="7" height="7"/>
+    <rect x="354" y="74" width="28" height="7"/>
+    <rect x="389" y="32" width="7" height="7"/>
+    <rect x="389" y="46" width="7" height="7"/>
+    <rect x="389" y="53" width="7" height="7"/>
+    <rect x="389" y="60" width="7" height="7"/>
+    <rect x="389" y="67" width="7" height="7"/>
+    <rect x="389" y="74" width="7" height="7"/>
+    <rect x="403" y="46" width="7" height="7"/>
+    <rect x="417" y="46" width="14" height="7"/>
+    <rect x="403" y="53" width="14" height="7"/>
+    <rect x="431" y="53" width="7" height="7"/>
+    <rect x="403" y="60" width="7" height="7"/>
+    <rect x="403" y="67" width="7" height="7"/>
+    <rect x="403" y="74" width="7" height="7"/>
+  </g>
+</svg>
